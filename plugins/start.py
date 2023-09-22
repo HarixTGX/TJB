@@ -73,7 +73,7 @@ async def start_command(client: Client, message: Message):
                 caption = "" if not msg.caption else msg.caption.html
 
             try:
-                log_msg = await msg.copy(chat_id=LOG_CHANNEL, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
+                log_msg = await msg.copy(chat_id=LOG_CHANNEL, caption = caption, parse_mode = ParseMode.HTML)
                 
                 lazy_stream = f"{URL}watch/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
                 lazy_download = f"{URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
