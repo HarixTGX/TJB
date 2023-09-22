@@ -11,11 +11,13 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
 
 from bot import Bot
-from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT
+from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT, LOG_CHANNEL
 from helper_func import subscribed, encode, decode, get_messages
 from database.database import add_user, del_user, full_userbase, present_user
-
-
+from config import *
+from urllib.parse import quote_plus
+from util.file_properties import get_name, get_hash, get_media_file_size
+import asyncio
 
 
 @Bot.on_message(filters.command('start') & filters.private & subscribed)
@@ -70,12 +72,27 @@ async def start_command(client: Client, message: Message):
             else:
                 caption = "" if not msg.caption else msg.caption.html
 
-            if DISABLE_CHANNEL_BUTTON:
-                reply_markup = msg.reply_markup
-            else:
-                reply_markup = None
-
             try:
+                log_msg = await msg.copy(chat_id=LOG_CHANNEL, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
+                
+                lazy_stream = f"{URL}watch/{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
+                lazy_download = f"{URL}{str(log_msg.id)}/{quote_plus(get_name(log_msg))}?hash={get_hash(log_msg)}"
+
+                xo = await message.reply_text(f'🔐')
+                await asyncio.sleep(1)
+                await xo.delete()
+                
+                await log_msg.reply_text(
+                    text=f"•• ʟɪɴᴋ ɢᴇɴᴇʀᴀᴛᴇᴅ ꜰᴏʀ ɪᴅ #{message.from_user.id} \n•• ᴜꜱᴇʀɴᴀᴍᴇ : {message.from_user.first_name} \n\n•• ᖴᎥᒪᗴ Nᗩᗰᗴ : {caption}",
+                    quote=True,
+                    disable_web_page_preview=True,
+                    reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("web Download", url=lazy_download),  # we download Link
+                                                        InlineKeyboardButton('▶Stream online', url=lazy_stream)]])  # web stream Link
+                )
+
+                reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("web Download", url=lazy_download),  # we download Link
+                                                        InlineKeyboardButton('▶Stream online', url=lazy_stream)]])  # web stream Link
+                
                 await msg.copy(chat_id=message.from_user.id, caption = caption, parse_mode = ParseMode.HTML, reply_markup = reply_markup, protect_content=PROTECT_CONTENT)
                 await asyncio.sleep(0.5)
             except FloodWait as e:
