@@ -13,31 +13,28 @@ from logging.handlers import RotatingFileHandler
 
 
 #Bot token @Botfather
-TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "5942641741:AAFYHAGJycIQr-CRBtWuO8LwPEwfsHXpsrs")
-
-BOT_USERNAME = os.environ.get("BOT_USERNAME", "TestBOt2023098BOT")
+TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "7195944781:AAHI0UIv9Gtih9nrO3XU3KHBCcVJg55sGhk")
 
 #Your API ID from my.telegram.org
-APP_ID = int(os.environ.get("APP_ID", "13323016"))
+APP_ID = int(os.environ.get("APP_ID", "10261086"))
 
 #Your API Hash from my.telegram.org
-API_HASH = os.environ.get("API_HASH", "68e791e616100248b0a53ae86a661a12")
+API_HASH = os.environ.get("API_HASH", "9195dc0591fbdb22b5711bcd1f437dab")
 
 #Your db channel Id
-CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1001851684341"))
+CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "-1001919732447"))
 
 #OWNER ID
-OWNER_ID = int(os.environ.get("OWNER_ID", "5965340120"))
+OWNER_ID = int(os.environ.get("OWNER_ID", "1426588906"))
 
 #Port
 PORT = os.environ.get("PORT", "8080")
 
 #Database 
-DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://lazy:Zabintkhab7808@lazydev786.lpvunl5.mongodb.net/?retryWrites=true&w=majority")
+DB_URI = os.environ.get("DATABASE_URL", "mongodb+srv://qtmvenewpost:qtmvenewpost10@cluster0.iuoxb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+DB_NAME = os.environ.get("DATABASE_NAME", "qtmvenewpost")
 
-DB_NAME = os.environ.get("DATABASE_NAME", "lazydev786")
-
-LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001820894005"))
+LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001919732447"))
 
 NO_PORT = bool(environ.get('NO_PORT', False))
 
